@@ -146,7 +146,7 @@
             var args = Array.prototype.slice.call(arguments, 1),
                 events = this._events;
 
-            if(!(events.hasOwnProperty(event) && events[event].length)) {
+            if(!events.hasOwnProperty(event)) {
                 return false;
             }
 
