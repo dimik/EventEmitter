@@ -150,15 +150,10 @@
                 return false;
             }
 
-            var listeners = events[event], listener;
+            var listeners = events[event];
 
             for(var i = 0, len = listeners.length; i < len; i++) {
-                if(listener = listeners[i]) {
-                    listener.apply(this, args);
-                }
-                else {
-                    continue;
-                }
+                listeners[i].apply(this, args);
             }
 
             return true;
@@ -190,7 +185,6 @@
             this._maxListeners = Math.abs(n);
         }
     };
-
     /**
      * Alias for the EventEmitter.addListener method.
      * Adds a listener to the end of the listeners array for the specified event.
@@ -213,7 +207,6 @@
         return listener?
             this.removeListener(event, listener) : this.removeAllListeners(event);
     };
-
     /**
      * Returns the number of listeners for a given event.
      * @function
