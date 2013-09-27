@@ -6,7 +6,7 @@ Browser version of <a href="http://nodejs.org/api/events.html#events_class_event
 Description
 ============
 
-This class provides the same behavior and interface as <a href="http://nodejs.org/api/events.html#events_class_events_eventemitter">NodeJS EventEmitter.</a>
+This class provides the same behavior and interface as <a href="http://nodejs.org/api/events.html#events_class_events_eventemitter">NodeJS EventEmitter</a>.
 And can be used within browser environment.
 
 Example
@@ -61,9 +61,9 @@ console.log(EventEmitter.listenerCount(emitter, 'my-event')); // 1
  * Remove event listeners.
  */
 // remove one listener of the specified event
-emitter.removeListener('my-event', listener);
+emitter.removeListener('my-event', myListener);
 // same but a bit shorter
-// emitter.off('my-event', listener);
+// emitter.off('my-event', myListener);
 
 // remove all listeners of the specified event
 emitter.removeAllListeners('my-event');
