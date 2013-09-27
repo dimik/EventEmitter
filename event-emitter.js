@@ -70,15 +70,21 @@
             var events = this._events;
 
             if(events.hasOwnProperty(event)) {
-                var listeners = events[event], handler;
+                var listeners = events[event];
 
-                for(var i = 0, len = listeners.length; i < len; i++) {
-                    if((listeners[i].__listener || listeners[i]) === listener) {
-                        listeners.splice(i, 1);
-                        this.emit('removeListener', event, listener);
-                        break;
+                try {
+                    for(var i = 0, len = listeners.length; i < len; i++) {
+                        if((listeners[i].__listener || listeners[i]) === listener) {
+                            listeners.splice(i, 1);
+                            this.emit('removeListener', event, listener);
+                            break;
+                        }
                     }
                 }
+                catch(err) {
+                    onEmitterError(this, err);
+                }
+
                 if(!listeners.length) {
                     delete events[event];
                 }
@@ -152,8 +158,13 @@
 
             var listeners = events[event];
 
-            for(var i = 0, len = listeners.length; i < len; i++) {
-                listeners[i].apply(this, args);
+            try {
+                for(var i = 0, len = listeners.length; i < len; i++) {
+                    listeners[i].apply(this, args);
+                }
+            }
+            catch(err) {
+                onEmitterError(this, err);
             }
 
             return true;
@@ -219,6 +230,25 @@
     EventEmitter.listenerCount = function (emitter, event) {
         return emitter.listeners(event).length;
     };
+
+    /**
+     * Helper for error processing.
+     * When an EventEmitter instance experiences an error, the typical action is to emit an 'error' event.
+     * If there is no listener for it, then the default action is to print a stack trace and exit the program.
+     * @function
+     * @private
+     * @name onEmitterError
+     * @param {EventEmitter} emitter
+     * @param {Error} err
+     */
+    function onEmitterError(emitter, err) {
+        if(EventEmitter.listenerCount(emitter, 'error')) {
+            emitter.emit('error', err);
+        }
+        else {
+            throw err;
+        }
+    }
 
     return EventEmitter;
 
