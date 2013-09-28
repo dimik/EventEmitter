@@ -12,7 +12,7 @@ And can be used within browser environment.
 Example
 ------------
 ```javascript
-var emitter = new EventEmitter();
+var emitter = new events.EventEmitter();
 
 /**
  * Special event for listening to new listeners addition.

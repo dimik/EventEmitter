@@ -1,6 +1,6 @@
 ( // Module boilerplate to support browser globals and AMD.
-    (typeof define === 'function' && function (m) { define('EventEmitter', m); }) ||
-    (function (m) { window.EventEmitter = m(); })
+    (typeof define === 'function' && function (m) { define('events', m); }) ||
+    (function (m) { window.events = m(); })
 )(function () {
 
     'use strict';
@@ -250,6 +250,8 @@
         }
     }
 
-    return EventEmitter;
+    return {
+        EventEmitter: EventEmitter
+    };
 
 });
